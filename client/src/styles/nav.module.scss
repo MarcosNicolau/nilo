@@ -1,0 +1,116 @@
+@use './library/colors';
+@use './library/mixings';
+
+nav {
+	@include mixings.flex-center(column);
+	justify-content: unset;
+	position: fixed;
+	padding: 1em;
+	height: 85%;
+	background-color: colors.$secondary-color;
+	color: white;
+
+	img {
+		height: 2rem;
+	}
+
+	.linkContainers {
+		@include mixings.flex-center(row);
+		color: white;
+		text-decoration: none;
+		font-size: 1.2rem;
+		@include mixings.transition(color, 150ms);
+
+		img {
+			margin: 0 0.5em;
+		}
+
+		&:hover {
+			color: rgb(189, 189, 189);
+			@include mixings.transition(color, 150ms);
+		}
+	}
+
+	/*============
+       NAV LINKS
+    ==============*/
+	.userIcon {
+		margin-bottom: 1.5em;
+		height: 3rem;
+	}
+
+	.home {
+		margin-bottom: 1.3em;
+	}
+
+	.yourLibrary {
+		text-transform: uppercase;
+		font-size: 0.8rem;
+	}
+
+	.likedSongs {
+		margin-bottom: 1em;
+	}
+
+	/*============
+       PLAYLISTS
+    ==============*/
+	.playlistContainer {
+		overflow: auto;
+		margin-bottom: 2em;
+		@include mixings.flex-center(column);
+	}
+
+	.playlistsBtn {
+		background-color: transparent;
+		border: none;
+		margin-bottom: 0.5em;
+		.playlistsBtn:last-child {
+			height: 1em;
+		}
+	}
+
+	.playlists {
+		overflow-y: auto;
+		padding: 0 2em;
+		@include mixings.flex-center(column);
+		justify-content: unset;
+		opacity: 0;
+		pointer-events: none;
+		@include mixings.transition(all, 150ms);
+		a {
+			margin-bottom: 0.8em;
+			font-size: 1rem;
+			color: rgb(189, 189, 189);
+			text-decoration: none;
+			@include mixings.transition(color, 150ms);
+
+			&:hover {
+				color: colors.$primary-color;
+				@include mixings.transition(color, 150ms);
+			}
+		}
+	}
+
+	.playlistsActive {
+		opacity: 1;
+		pointer-events: all;
+		@include mixings.transition(all, 150ms);
+	}
+
+	/*=================
+       ACTIONS BTNS
+    ===================*/
+	.actionBtnsContainer {
+		@include mixings.flex-center(column);
+		button {
+			margin-bottom: 1em;
+			background-color: transparent;
+			border: none;
+
+			img {
+				margin: 0;
+			}
+		}
+	}
+}
