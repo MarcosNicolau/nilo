@@ -1,5 +1,5 @@
-@use './library/colors';
-@use './library/mixings';
+@use '../abstracts/variables';
+@use '../abstracts/mixings';
 
 nav {
 	@include mixings.flex-center(column);
@@ -7,17 +7,16 @@ nav {
 	position: fixed;
 	padding: 1em;
 	height: 85%;
-	background-color: colors.$secondary-color;
-	color: white;
-
+	background-color: variables.$secondary-color;
+	color: variables.$primary-color;
 	img {
 		height: 2rem;
 	}
 
 	.linkContainers {
 		@include mixings.flex-center(row);
-		color: white;
 		text-decoration: none;
+		color: variables.$primary-color;
 		font-size: 1.2rem;
 		@include mixings.transition(color, 150ms);
 
@@ -26,8 +25,7 @@ nav {
 		}
 
 		&:hover {
-			color: rgb(189, 189, 189);
-			@include mixings.transition(color, 150ms);
+			@include mixings.font-hover;
 		}
 	}
 
@@ -80,13 +78,14 @@ nav {
 		@include mixings.transition(all, 150ms);
 		a {
 			margin-bottom: 0.8em;
+			padding: 0 0.8em;
 			font-size: 1rem;
-			color: rgb(189, 189, 189);
+			color: variables.$quinary-color;
 			text-decoration: none;
 			@include mixings.transition(color, 150ms);
 
 			&:hover {
-				color: colors.$primary-color;
+				color: variables.$primary-color;
 				@include mixings.transition(color, 150ms);
 			}
 		}

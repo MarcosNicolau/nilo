@@ -6,23 +6,35 @@ import LikeIcon from "../assets/like.svg";
 import playlistIcon from "../assets/nav/playlist.svg";
 import arrowIcon from "../assets/nav/arrow.svg";
 import plusIcon from "../assets/plus.svg";
-import navStyles from "../styles/nav.module.scss";
+import navStyles from "../styles/layout/nav.module.scss";
 
 const Nav = () => {
 	const [playlist, setPlaylist] = useState(false);
+	const [selectedSection, setSelectedSection] = useState("home");
+	const borderStyle = "solid .2rem #FFE156";
 
 	return (
 		<nav>
 			<img src={userIcon} alt="user icon" className={navStyles.userIcon} />
 
-			<Link to="/home" className={`${navStyles.linkContainers} ${navStyles.home}`}>
+			<Link
+				to="/home"
+				className={`${navStyles.linkContainers} ${navStyles.home}`}
+				style={{ borderLeft: selectedSection === "home" && borderStyle }}
+				onClick={() => setSelectedSection("home")}
+			>
 				<img src={homeIcon} alt="home icon" />
 				Home
 			</Link>
 
 			<p className={navStyles.yourLibrary}>Your Library</p>
 
-			<Link to="/liked-songs" className={`${navStyles.linkContainers} ${navStyles.likedSongs}`}>
+			<Link
+				to="/liked-songs"
+				className={`${navStyles.linkContainers} ${navStyles.likedSongs}`}
+				style={{ borderLeft: selectedSection === "liked-songs" && borderStyle }}
+				onClick={() => setSelectedSection("liked-songs")}
+			>
 				<img src={LikeIcon} alt="like icon" /> Liked songs
 			</Link>
 
@@ -36,36 +48,20 @@ const Nav = () => {
 				</button>
 
 				<div className={`${navStyles.playlists} ${playlist && navStyles.playlistsActive}`}>
-					<Link to={"/playlist/34u2804780392"}>Playlist name</Link>
-					<Link to={"/playlist/34u2804780392"}>Playlist name</Link>
-					<Link to={"/playlist/34u2804780392"}>Playlist name</Link>
-					<Link to={"/playlist/34u2804780392"}>Playlist name</Link>
-					<Link to={"/playlist/34u2804780392"}>Playlist name</Link>
-					<Link to={"/playlist/34u2804780392"}>Playlist name</Link>
-					<Link to={"/playlist/34u2804780392"}>Playlist name</Link>
-					<Link to={"/playlist/34u2804780392"}>Playlist name</Link>
-					<Link to={"/playlist/34u2804780392"}>Playlist name</Link>
-					<Link to={"/playlist/34u2804780392"}>Playlist name</Link>
-					<Link to={"/playlist/34u2804780392"}>Playlist name</Link>
-					<Link to={"/playlist/34u2804780392"}>Playlist name</Link>
-					<Link to={"/playlist/34u2804780392"}>Playlist name</Link>
-					<Link to={"/playlist/34u2804780392"}>Playlist name</Link>
-					<Link to={"/playlist/34u2804780392"}>Playlist name</Link>
-					<Link to={"/playlist/34u2804780392"}>Playlist name</Link>
-					<Link to={"/playlist/34u2804780392"}>Playlist name</Link>
-					<Link to={"/playlist/34u2804780392"}>Playlist name</Link>
-					<Link to={"/playlist/34u2804780392"}>Playlist name</Link>
-					<Link to={"/playlist/34u2804780392"}>Playlist name</Link>
-					<Link to={"/playlist/34u2804780392"}>Playlist name</Link>
-					<Link to={"/playlist/34u2804780392"}>Playlist name</Link>
-					<Link to={"/playlist/34u2804780392"}>Playlist name</Link>
-					<Link to={"/playlist/34u2804780392"}>Playlist name</Link>
-					<Link to={"/playlist/34u2804780392"}>Playlist name</Link>
-					<Link to={"/playlist/34u2804780392"}>Playlist name</Link>
-					<Link to={"/playlist/34u2804780392"}>Playlist name</Link>
+					<Link
+						to={"/playlist/34u2804780392"}
+						style={{
+							borderLeft: selectedSection === "playlists/34u2804780392" && borderStyle,
+							color: selectedSection === "playlists/34u2804780392" && "#fbfbff",
+						}}
+						onClick={() => setSelectedSection("playlists/34u2804780392")}
+					>
+						Playlist name
+					</Link>
 				</div>
 			</div>
 
+			{/* ADD SONG && ADD PLAYLIST CREATE A COMPONENT */}
 			<div className={`${navStyles.linkContainers} ${navStyles.actionBtnsContainer}`}>
 				<button className={`${navStyles.linkContainers}`}>
 					<img src={plusIcon} alt="add song" /> New Song

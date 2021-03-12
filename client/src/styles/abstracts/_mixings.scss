@@ -1,3 +1,5 @@
+@use './variables';
+
 @mixin flex-center($direction) {
 	display: flex;
 	justify-content: center;
@@ -7,4 +9,9 @@
 
 @mixin transition($type, $duration) {
 	transition: $type $duration ease-in-out;
+}
+
+@mixin font-hover {
+	color: variables.$quinary-color;
+	@include transition(color, 150ms);
 }
