@@ -1,0 +1,59 @@
+@use '../abstracts/mixings';
+@use '../abstracts/variables';
+
+.container {
+	height: 88vh;
+	z-index: 100;
+	opacity: 0.999999;
+	background-color: rgba(0, 0, 0, 0.6);
+
+	.form {
+		@include mixings.flex-center(row);
+	}
+
+	.songInputContainer {
+		@include mixings.flex-center(column);
+	}
+
+	.submitBtn {
+		position: absolute;
+		bottom: 2em;
+	}
+}
+
+.selectorContainer {
+	position: relative;
+	margin-top: 1em;
+	min-width: 350px;
+	// Dropdown icon
+	&::after {
+		color: white;
+		content: "▾";
+		margin-right: 10px;
+		pointer-events: none;
+		position: absolute;
+		right: 10px;
+		top: 7px;
+		font-size: 20px;
+	}
+}
+
+.selector {
+	-moz-appearance: none;
+	-webkit-appearance: none;
+	background-color: variables.$secondary-color;
+	color: white;
+	border: none;
+	border-radius: 0;
+	cursor: pointer;
+	padding: 12px;
+	width: 100%;
+	font-size: 18px;
+	&:focus {
+		color: white;
+	}
+	// Hack for IE 11+
+	&::-ms-expand {
+		display: none;
+	}
+}

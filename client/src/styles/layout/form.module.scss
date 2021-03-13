@@ -1,0 +1,46 @@
+@use '../abstracts/mixings';
+@use '../abstracts/variables';
+
+.formContainer {
+	background-color: variables.$tertiary-color;
+	color: variables.$primary-color;
+	position: relative;
+	height: 40em;
+	width: 45%;
+	@include mixings.flex-center(column);
+
+	.formTitle {
+		position: absolute;
+		top: 0.5em;
+		font-weight: 300;
+		font-size: 1.875rem;
+	}
+
+	.form {
+		@include mixings.flex-center(column);
+		width: 40%;
+	}
+
+	.label {
+		text-align: center;
+		font-size: 1.25rem;
+	}
+
+	.errors {
+		color: red;
+		p {
+			margin: -1em 0 2em;
+		}
+		img {
+			margin-right: 0.5em;
+			height: 1em;
+		}
+	}
+
+	.changeForm {
+		position: absolute;
+		bottom: 4em;
+		margin-top: 2em;
+		color: rgb(45, 66, 253);
+	}
+}

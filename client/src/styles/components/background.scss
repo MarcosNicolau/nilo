@@ -1,4 +1,7 @@
+@use '../abstracts/mixings.scss';
+@use '../abstracts/variables.scss';
 .background {
+	@include mixings.flex-center(column);
 	height: 100vh;
 	width: 100%;
 	background-color: variables.$secondary-color;

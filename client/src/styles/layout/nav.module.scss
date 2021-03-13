@@ -24,7 +24,8 @@ nav {
 			margin: 0 0.5em;
 		}
 
-		&:hover {
+		&:hover,
+		&:focus {
 			@include mixings.font-hover;
 		}
 	}

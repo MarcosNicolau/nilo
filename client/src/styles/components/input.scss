@@ -1,0 +1,19 @@
+@use '../abstracts/variables';
+@use '../abstracts/mixings';
+.input {
+	outline: none;
+	width: 100%;
+	padding: 1em;
+	color: variables.$primary-color;
+	font-size: 1rem;
+	background-color: transparent;
+	border: none;
+	border-bottom: solid 0.2rem variables.$primary-color;
+	margin-bottom: 2em;
+	@include mixings.transition(all, 150ms);
+
+	&:focus {
+		border-color: variables.$quaternary-color;
+		@include mixings.transition(all, 150ms);
+	}
+}

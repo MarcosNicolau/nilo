@@ -1,13 +1,15 @@
 import { Formik } from "formik";
 import { Link } from "react-router-dom";
-import authStyles from "../../styles/pages/auth.module.scss";
-import errorIcon from "../../assets/error.svg";
+import formStyles from "../../styles/layout/form.module.scss";
+import FormError from "../utils/form-error";
 
 const AuthForm = ({ authType, handleAuth, handleValidation, globalError }) => {
 	return (
 		<div className="background">
-			<div className={authStyles.formContainer}>
-				<h2>{authType === "login" ? "Login into Nilo" : "Join Nilo community"}</h2>
+			<div className={formStyles.formContainer}>
+				<h2 className={formStyles.formTitle}>
+					{authType === "login" ? "Login into Nilo" : "Join Nilo community"}
+				</h2>
 				<Formik
 					initialValues={{
 						username: "",
@@ -25,54 +27,40 @@ const AuthForm = ({ authType, handleAuth, handleValidation, globalError }) => {
 					}}
 				>
 					{({ values, errors, touched, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
-						<form onSubmit={handleSubmit}>
-							<label htmlFor="username">Username</label>
+						<form onSubmit={handleSubmit} className={formStyles.form}>
+							<label htmlFor="username" className={formStyles.label}>
+								Username
+							</label>
 							<input
+								className="input"
 								type="text"
 								name="username"
 								onChange={handleChange}
 								onBlur={handleBlur}
 								value={values.username}
 							/>
-							<div className={authStyles.errors}>
-								{errors.username && touched.username && (
-									<p>
-										<img src={errorIcon} alt="error" />
-										{errors.username}
-									</p>
-								)}
-							</div>
-							<label htmlFor="username">Password</label>
+							{errors.username && touched.username && <FormError error={errors.username} />}
+							<label htmlFor="username" className={formStyles.label}>
+								Password
+							</label>
 							<input
+								className="input"
 								type="password"
 								name="password"
 								onChange={handleChange}
 								onBlur={handleBlur}
 								value={values.password}
 							/>
-							<div className={authStyles.errors}>
-								{errors.password && touched.password && (
-									<p>
-										<img src={errorIcon} alt="error" />
-										{errors.password}
-									</p>
-								)}
-							</div>
+							{errors.password && touched.password && <FormError error={errors.password} />}
+
 							<button type="submit" disabled={isSubmitting} className="action-btn">
 								{authType === "login" ? "log in" : "sign in"}
 							</button>
-							<div className={authStyles.errors}>
-								{errors.global && (
-									<p>
-										<img src={errorIcon} alt="error" />
-										{errors.global}
-									</p>
-								)}
-							</div>
+							{errors.global && touched.global && <FormError error={errors.global} />}
 						</form>
 					)}
 				</Formik>
-				<Link to={authType === "login" ? "/signin" : "/"} className={authStyles.changeForm}>
+				<Link to={authType === "login" ? "/signin" : "/"} className={formStyles.changeForm}>
 					{authType === "login" ? "Don't have an account?" : "Already have an account?"}
 				</Link>
 			</div>

@@ -1,0 +1,26 @@
+@use '../abstracts/mixings';
+@use '../abstracts/variables';
+
+.inputFile {
+	margin-top: 2em;
+	position: relative;
+	background-color: variables.$secondary-color;
+}
+
+.audioInput {
+	opacity: 0;
+	width: 350px;
+	padding: 1em 0;
+	cursor: pointer;
+}
+
+.chooseAudio {
+	@include mixings.flex-center(row);
+	position: absolute;
+	left: 1em;
+
+	img {
+		margin-right: 1em;
+		height: 2em;
+	}
+}

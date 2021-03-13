@@ -1,15 +1,15 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import userIcon from "../assets/nav/user.svg";
-import homeIcon from "../assets/nav/home.svg";
-import LikeIcon from "../assets/like.svg";
-import playlistIcon from "../assets/nav/playlist.svg";
-import arrowIcon from "../assets/nav/arrow.svg";
-import plusIcon from "../assets/plus.svg";
-import navStyles from "../styles/layout/nav.module.scss";
+import userIcon from "../../assets/nav/user.svg";
+import homeIcon from "../../assets/nav/home.svg";
+import LikeIcon from "../../assets/like.svg";
+import playlistIcon from "../../assets/nav/playlist.svg";
+import arrowIcon from "../../assets/nav/arrow.svg";
+import CreateBtns from "../new-songs-playlists/create-btns";
+import navStyles from "../../styles/layout/nav.module.scss";
 
 const Nav = () => {
-	const [playlist, setPlaylist] = useState(false);
+	const [playlist, setPlaylist] = useState(true);
 	const [selectedSection, setSelectedSection] = useState("home");
 	const borderStyle = "solid .2rem #FFE156";
 
@@ -60,16 +60,7 @@ const Nav = () => {
 					</Link>
 				</div>
 			</div>
-
-			{/* ADD SONG && ADD PLAYLIST CREATE A COMPONENT */}
-			<div className={`${navStyles.linkContainers} ${navStyles.actionBtnsContainer}`}>
-				<button className={`${navStyles.linkContainers}`}>
-					<img src={plusIcon} alt="add song" /> New Song
-				</button>
-				<button className={`${navStyles.linkContainers}`}>
-					<img src={plusIcon} alt="add playlist" /> New Playlist
-				</button>
-			</div>
+			<CreateBtns />
 		</nav>
 	);
 };
