@@ -1,12 +1,17 @@
-import AuthForm from "./auth";
+import AuthForm from "./auth-form";
 import axios from "axios";
 
 const Login = () => {
-	const handleAuth = async () => {
+	const handleAuth = async (values, setErrors) => {
 		try {
-			await axios.get("/auth/sign-in");
+			await axios.post("/auth/login", {
+				username: values.username,
+				password: values.password,
+			});
+			window.location.href = "/";
 		} catch (err) {
-			console.log(err);
+			const res = err.response;
+			if (res.status === 400) return setErrors({ global: res.data });
 		}
 	};
 

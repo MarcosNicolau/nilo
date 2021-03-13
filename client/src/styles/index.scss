@@ -2,6 +2,7 @@
 @import "./components/column.scss";
 @import "./components/row.scss";
 @import "./components/button.scss";
+@import "./components/background.scss";
 
 body {
 	margin: 0;
@@ -15,4 +16,8 @@ body {
 button {
 	font-family: "Roboto", sans-serif;
 	cursor: pointer;
+}
+
+h1 {
+	margin: 0;
 }

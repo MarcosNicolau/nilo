@@ -14,18 +14,23 @@ const App = () => {
 	const getUser = async () => {
 		const res = await axios.get("/auth/is-user-connected");
 		setUser(res.data);
-		console.log(res.data);
 	};
 
 	useEffect(() => getUser(), []);
 
-	if (user === "Loading") return <h1>Loading...</h1>;
+	if (user === "Loading")
+		return (
+			<div className="background">
+				<h1>Loading...</h1>
+			</div>
+		);
+
 	if (user === false)
 		return (
 			<Router>
 				<Switch>
-					<Route exact path="/" component={Login} />
-					<Route exact path="/signin" component={SignIn} />
+					<Route path="/signin" component={SignIn} />
+					<Route path="/" component={Login} />
 				</Switch>
 			</Router>
 		);

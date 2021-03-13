@@ -23,7 +23,7 @@ const signIn_post = async (req, res) => {
 	const [isUsernameTaken] = await db.query(
 		`SELECT * FROM users WHERE username = '${username.toLowerCase()}'`
 	);
-	if (isUsernameTaken.length) return res.status(401).send("Username already taken");
+	if (isUsernameTaken.length) return res.status(400).send("Username already taken");
 
 	const hashedPassword = await hash(password, 12);
 	await db.query(
