@@ -1,0 +1,19 @@
+@use '../abstracts/variables';
+@use '../abstracts/mixings';
+
+.action-btn {
+	background-color: variables.$quaternary-color;
+	border: solid 0.2rem variables.$quaternary-color;
+	color: variables.$tertiary-color;
+	border-radius: 0.6rem;
+	padding: 0.8rem 1.6rem;
+	font-size: 1.25rem;
+	font-weight: 700;
+	text-transform: uppercase;
+
+	&:hover,
+	&:focus {
+		background-color: #ffe571;
+		@include mixings.transition(background-color, 150ms);
+	}
+}
