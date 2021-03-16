@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import UserContext from "./user-context";
+
+//Navigation and authentication import
 import Nav from "./components/nav/nav";
 import Controller from "./components/controller";
 import Login from "./components/auth/login";
@@ -10,6 +12,9 @@ import SignIn from "./components/auth/sign-in";
 import NewSong from "./components/new-songs-playlists/new-song";
 import NewPlaylist from "./components/new-songs-playlists/new-playlist/new-playlist";
 import NewSongPlaylistCtxProvider from "./components/new-songs-playlists/context";
+
+//Sections import
+import MySongs from "./components/sections/my-songs";
 
 const App = () => {
 	const [user, setUser] = useState("Loading");
@@ -46,6 +51,9 @@ const App = () => {
 					<NewPlaylist />
 				</NewSongPlaylistCtxProvider>
 				<Controller />
+				<Switch>
+					<Route path={"/my-songs"} component={MySongs} />
+				</Switch>
 			</Router>
 		</UserContext.Provider>
 	);

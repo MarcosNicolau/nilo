@@ -2,6 +2,7 @@
 @use '../abstracts/variables';
 
 .inputFile {
+	@include mixings.flex-center(row);
 	margin-top: 2em;
 	position: relative;
 	background-color: variables.$secondary-color;

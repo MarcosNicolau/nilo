@@ -7,10 +7,13 @@ import ImgInput from "../img-input";
 import SongGenreSelector from "./song-genre";
 import AudioInput from "./audio-input";
 import FormError from "../../utils/form-error";
+import axios from "axios";
 
 const NewSong = () => {
 	const { newSong, setNewSong } = useNewSongCtx();
+	const [isLoading, setIsLoading] = useState(false);
 	const [audioFile, setAudioFile] = useState(undefined);
+	const [imageFile, setImageFile] = useState(undefined);
 	if (!newSong) return null;
 
 	const closeNewSong = (e) => {
@@ -26,21 +29,34 @@ const NewSong = () => {
 					initialValues={{
 						name: "",
 						genre: "pop",
-						image: "",
+					}}
+					onSubmit={async (values) => {
+						const formData = new FormData();
+						formData.append("audio", audioFile);
+						formData.append("image", imageFile);
+						formData.append("name", values.name);
+						formData.append("genre", values.genre);
+
+						setIsLoading(true);
+						await axios.post("/create/new-song", formData);
+						window.location.href = "/my-songs";
 					}}
 					validate={(values) => {
 						const errors = {};
 						if (!values.name) errors.name = "Required";
 						if (!values.genre) errors.genre = "Required";
-						if (!values.image) errors.image = "Required";
-						if (!values.audio) errors.audio = "Required";
 						if (!audioFile) errors.audio = "Required";
+						if (!imageFile) errors.image = "Required";
 						return errors;
 					}}
 				>
 					{({ values, errors, touched, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
-						<form onSubmit={handleSubmit} className={newFormStyles.form}>
-							<ImgInput value={values.image} handleChange={handleChange} handleBlur={handleBlur} />
+						<form
+							onSubmit={handleSubmit}
+							className={newFormStyles.form}
+							encType="multipart-form-data"
+						>
+							<ImgInput value={values.image} setter={setImageFile} image={imageFile} />
 							<div className={newFormStyles.songInputContainer}>
 								<label htmlFor="song-name" className={formStyles.label}>
 									Song name
@@ -61,10 +77,12 @@ const NewSong = () => {
 
 							<button
 								type="submit"
-								disabled={isSubmitting}
-								className={`action-btn ${newFormStyles.submitBtn}`}
+								disabled={(isSubmitting, isLoading)}
+								className={`action-btn ${newFormStyles.submitBtn} ${
+									isLoading && newFormStyles.isLoading
+								}`}
 							>
-								Upload Song
+								{isLoading ? "Uploading..." : "Upload Song"}
 							</button>
 						</form>
 					)}

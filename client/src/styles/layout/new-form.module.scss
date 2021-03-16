@@ -20,6 +20,12 @@
 		bottom: 2em;
 	}
 
+	.isLoading {
+		background-color: variables.$button-loading;
+		border-color: variables.$button-loading;
+		cursor: default;
+	}
+
 	.textarea {
 		font-family: "Roboto", sans-serif;
 		resize: none;

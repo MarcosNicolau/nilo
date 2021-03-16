@@ -4,6 +4,8 @@ const bodyParser = require("body-parser");
 const session = require("express-session");
 const passportLocalStrategy = require("./config/passport");
 const authRoutes = require("./routes/auth");
+const createRoutes = require("./routes/create");
+const songsRoutes = require("./routes/songs");
 const passport = require("passport");
 require("./db");
 require("dotenv").config();
@@ -11,7 +13,7 @@ require("dotenv").config();
 const PORT = process.env.PORT || 8080;
 const app = express();
 
-app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: "50mb" }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 app.use(
@@ -29,3 +31,5 @@ app.listen(PORT, () => console.log(`listening on port ${PORT}`));
 
 //ROUTES
 app.use("/auth", authRoutes);
+app.use("/create", createRoutes);
+app.use("/songs", songsRoutes);

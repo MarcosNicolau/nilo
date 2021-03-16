@@ -1,28 +1,27 @@
-import { useState } from "react";
 import fileReader from "../../utils/file-reader";
+import { useState } from "react";
 import imgInputStyles from "../../styles/components/img-input.module.scss";
 import musicIcon from "../../assets/music.svg";
 import FormError from "../utils/form-error";
 
-const ImgInput = ({ value, error }) => {
-	const [selectedSongImg, setSelectedSongImg] = useState(undefined);
-
+const ImgInput = ({ error, setter, image }) => {
+	const [imageBynary, setImageBynary] = useState(undefined);
 	const handleImgChange = async (e) => {
 		const file = e.target.files[0];
-		fileReader(file, setSelectedSongImg);
+		await fileReader(file, setImageBynary);
+		setter(file);
 	};
 	return (
 		<>
 			<label htmlFor="file" className={imgInputStyles.inputFile}>
 				<div className={imgInputStyles.chooseImg}>
-					<img src={selectedSongImg ? selectedSongImg : musicIcon} alt="music" />
-					{selectedSongImg ? null : <p>Choose image</p>}
+					<img src={imageBynary ? imageBynary : musicIcon} alt="music" />
+					{imageBynary ? null : <p>Choose image</p>}
 				</div>
 				<input
 					className={imgInputStyles.imgInput}
 					type="file"
 					name="image"
-					value={value}
 					accept="image/*"
 					onChange={handleImgChange}
 				/>

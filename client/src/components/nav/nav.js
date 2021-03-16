@@ -5,6 +5,7 @@ import homeIcon from "../../assets/nav/home.svg";
 import LikeIcon from "../../assets/like.svg";
 import playlistIcon from "../../assets/nav/playlist.svg";
 import arrowIcon from "../../assets/nav/arrow.svg";
+import mySongsIcon from "../../assets/nav/my-music.svg";
 import CreateBtns from "../new-songs-playlists/create-btns";
 import navStyles from "../../styles/layout/nav.module.scss";
 
@@ -36,6 +37,15 @@ const Nav = () => {
 				onClick={() => setSelectedSection("liked-songs")}
 			>
 				<img src={LikeIcon} alt="like icon" /> Liked songs
+			</Link>
+
+			<Link
+				to="/my-songs"
+				className={`${navStyles.linkContainers} ${navStyles.likedSongs}`}
+				style={{ borderLeft: selectedSection === "my-songs" && borderStyle }}
+				onClick={() => setSelectedSection("my-songs")}
+			>
+				<img src={mySongsIcon} alt="like icon" /> My Songs
 			</Link>
 
 			<div className={`${navStyles.playlistContainer}`}>

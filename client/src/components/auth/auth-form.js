@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import formStyles from "../../styles/layout/form.module.scss";
 import FormError from "../utils/form-error";
 
-const AuthForm = ({ authType, handleAuth, handleValidation, globalError }) => {
+const AuthForm = ({ authType, handleAuth, handleValidation }) => {
 	return (
 		<div className="background">
 			<div className={formStyles.formContainer}>
