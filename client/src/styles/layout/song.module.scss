@@ -1,0 +1,91 @@
+@use '../abstracts/variables.scss';
+@use '../abstracts/mixings.scss';
+
+.songsContainer {
+	@include mixings.flex-center(column);
+	margin-top: 5em;
+
+	.songInfoContainer {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+	.songInfo {
+		top: 6em;
+		position: absolute;
+		pointer-events: none;
+		color: black;
+	}
+
+	.songContainer {
+		@include mixings.flex-center(row);
+		padding: 1em 0;
+		width: 100%;
+		justify-content: space-evenly;
+		@include mixings.transition(all, 150ms);
+
+		&:hover {
+			background-color: rgb(228, 228, 228);
+			@include mixings.transition(all, 150ms);
+			.playBtn {
+				opacity: 1;
+			}
+		}
+
+		img {
+			cursor: pointer;
+			height: 3em;
+		}
+
+		.songImg {
+			cursor: default;
+			height: 4em;
+			width: 4em;
+		}
+
+		.actionBtns {
+			@include mixings.transition(all, 150ms);
+
+			&:hover {
+				@include mixings.transition(all, 150ms);
+				filter: invert(24%) sepia(42%) saturate(0%) hue-rotate(157deg) brightness(110%)
+					contrast(79%);
+			}
+		}
+
+		p {
+			font-size: 1.08rem;
+			color: variables.$font-color;
+		}
+
+		.songName {
+			width: 25%;
+			@include mixings.transition(all, 150ms);
+		}
+	}
+}
+
+.playBtn {
+	opacity: 0;
+	position: absolute;
+	left: 2em;
+	@include mixings.transition(all, 150ms);
+
+	&:hover {
+		@include mixings.transition(all, 150ms);
+		filter: invert(24%) sepia(42%) saturate(0%) hue-rotate(157deg) brightness(110%) contrast(79%);
+	}
+}
+
+//Media query for play btn
+@media (max-width: 1200px) {
+	.playBtn {
+		left: 1em;
+	}
+}
+
+@media (max-width: 1100px) {
+	.playBtn {
+		left: 0.5em;
+	}
+}

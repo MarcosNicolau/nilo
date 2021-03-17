@@ -14,7 +14,10 @@ import NewPlaylist from "./components/new-songs-playlists/new-playlist/new-playl
 import NewSongPlaylistCtxProvider from "./components/new-songs-playlists/context";
 
 //Sections import
-import MySongs from "./components/sections/my-songs";
+import MySongs from "./components/pages/my-songs";
+
+//Song Imports
+import CurrentSongContextProvider from "./current-song/context";
 
 const App = () => {
 	const [user, setUser] = useState("Loading");
@@ -44,17 +47,19 @@ const App = () => {
 
 	return (
 		<UserContext.Provider value={user}>
-			<Router>
-				<NewSongPlaylistCtxProvider>
-					<Nav />
-					<NewSong />
-					<NewPlaylist />
-				</NewSongPlaylistCtxProvider>
-				<Controller />
-				<Switch>
-					<Route path={"/my-songs"} component={MySongs} />
-				</Switch>
-			</Router>
+			<CurrentSongContextProvider>
+				<Router>
+					<NewSongPlaylistCtxProvider>
+						<Nav />
+						<NewSong />
+						<NewPlaylist />
+					</NewSongPlaylistCtxProvider>
+					<Controller />
+					<Switch>
+						<Route path={"/my-songs"} component={MySongs} />
+					</Switch>
+				</Router>
+			</CurrentSongContextProvider>
 		</UserContext.Provider>
 	);
 };

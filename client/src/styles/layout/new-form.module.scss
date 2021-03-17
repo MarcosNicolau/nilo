@@ -2,9 +2,9 @@
 @use '../abstracts/variables';
 
 .container {
+	position: absolute;
 	height: 88vh;
 	z-index: 100;
-	opacity: 0.999999;
 	background-color: rgba(0, 0, 0, 0.6);
 
 	.form {
@@ -67,4 +67,16 @@
 	&::-ms-expand {
 		display: none;
 	}
+}
+
+.appear {
+	opacity: 0.999999;
+	pointer-events: all;
+	@include mixings.transition(all, 250ms);
+}
+
+.disappear {
+	opacity: 0;
+	pointer-events: none;
+	@include mixings.transition(all, 250ms);
 }

@@ -20,6 +20,8 @@
 		.songCover {
 			margin-right: 1em;
 			height: 5em;
+			width: 5em;
+			background-color: variables.$secondary-color;
 		}
 
 		h4 {
@@ -36,7 +38,7 @@
 		SONG LENGTH
 	======================*/
 	.songLength {
-		margin: 0 0.5em;
+		margin: 2em 0.5em;
 		width: 35em;
 		height: 0.5em;
 		border-radius: 1rem;
@@ -60,6 +62,7 @@
 
 		.playBtn {
 			height: 4em;
+			width: 4em;
 		}
 
 		.backBtn {

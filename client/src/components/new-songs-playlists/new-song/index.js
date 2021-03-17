@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNewSongCtx } from "../context";
 import { Formik } from "formik";
+import closeIcon from "../../../assets/close.svg";
 import formStyles from "../../../styles/layout/form.module.scss";
 import newFormStyles from "../../../styles/layout/new-form.module.scss";
 import ImgInput from "../img-input";
@@ -14,15 +15,18 @@ const NewSong = () => {
 	const [isLoading, setIsLoading] = useState(false);
 	const [audioFile, setAudioFile] = useState(undefined);
 	const [imageFile, setImageFile] = useState(undefined);
-	if (!newSong) return null;
-
 	const closeNewSong = (e) => {
 		if (e.target.classList.contains("background") || e.target.classList.contains("close"))
 			return setNewSong((prev) => !prev);
 	};
 
 	return (
-		<div className={`background ${newFormStyles.container}`} onClick={closeNewSong}>
+		<div
+			className={`background ${newFormStyles.container} ${
+				newSong ? newFormStyles.appear : newFormStyles.disappear
+			}`}
+			onClick={closeNewSong}
+		>
 			<div className={formStyles.formContainer}>
 				<h2 className={formStyles.formTitle}>Upload your song</h2>
 				<Formik
@@ -30,7 +34,10 @@ const NewSong = () => {
 						name: "",
 						genre: "pop",
 					}}
-					onSubmit={async (values) => {
+					onSubmit={async (values, { setErrors }) => {
+						if (!audioFile) return setErrors({ global: "Complete all the fields" });
+						if (!imageFile) return setErrors({ global: "Complete all the fields" });
+
 						const formData = new FormData();
 						formData.append("audio", audioFile);
 						formData.append("image", imageFile);
@@ -45,8 +52,6 @@ const NewSong = () => {
 						const errors = {};
 						if (!values.name) errors.name = "Required";
 						if (!values.genre) errors.genre = "Required";
-						if (!audioFile) errors.audio = "Required";
-						if (!imageFile) errors.image = "Required";
 						return errors;
 					}}
 				>
@@ -56,6 +61,7 @@ const NewSong = () => {
 							className={newFormStyles.form}
 							encType="multipart-form-data"
 						>
+							<img src={closeIcon} alt="close" className="close" />
 							<ImgInput value={values.image} setter={setImageFile} image={imageFile} />
 							<div className={newFormStyles.songInputContainer}>
 								<label htmlFor="song-name" className={formStyles.label}>
@@ -73,8 +79,8 @@ const NewSong = () => {
 
 								<SongGenreSelector value={values.songGenre} handleChange={handleChange} />
 								<AudioInput value={audioFile} setter={setAudioFile} />
+								{errors.global && <FormError error={errors.global} style={{ margin: "2em 0 0" }} />}
 							</div>
-
 							<button
 								type="submit"
 								disabled={(isSubmitting, isLoading)}

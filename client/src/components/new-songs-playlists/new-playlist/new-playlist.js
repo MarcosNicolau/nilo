@@ -11,9 +11,13 @@ const NewPlaylist = () => {
 		if (e.target.classList.contains("background") || e.target.classList.contains("close"))
 			return setNewPlaylist((prev) => !prev);
 	};
-	if (!newPlaylist) return null;
 	return (
-		<div className={`background ${newFormStyles.container}`} onClick={closeNewSong}>
+		<div
+			className={`background ${newFormStyles.container} ${
+				newPlaylist ? newFormStyles.appear : newFormStyles.disappear
+			}`}
+			onClick={closeNewSong}
+		>
 			<div className={formStyles.formContainer}>
 				<h2 className={formStyles.formTitle}>Create a new playlist</h2>
 				<Formik

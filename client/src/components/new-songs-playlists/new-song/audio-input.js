@@ -4,19 +4,8 @@ import musicIcon from "../../../assets/music.svg";
 const AudioInput = ({ value, setter }) => {
 	const handleAudioChange = async (e) => {
 		const file = e.target.files[0];
-		if (!file) return;
 		setter(file);
 	};
-
-	// const getAudioDuration = (file, name) => {
-	// 	const audio = document.createElement("audio");
-	// 	audio.src = file;
-	// 	audio.onloadedmetadata = () => {
-	// 		const minutes = parseInt(audio.duration / 60, 10);
-	// 		const seconds = parseInt(audio.duration % 60);
-	// 		setter({ file: file, name: name, duration: { minutes, seconds } });
-	// 	};
-	// };
 
 	return (
 		<>

@@ -56,7 +56,7 @@ const AuthForm = ({ authType, handleAuth, handleValidation }) => {
 							<button type="submit" disabled={isSubmitting} className="action-btn">
 								{authType === "login" ? "log in" : "sign in"}
 							</button>
-							{errors.global && touched.global && <FormError error={errors.global} />}
+							{errors.global && <FormError error={errors.global} style={{ margin: "2em 0 0" }} />}
 						</form>
 					)}
 				</Formik>
