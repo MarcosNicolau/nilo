@@ -60,7 +60,7 @@ const Nav = () => {
 							borderLeft: selectedSection === "/playlists/34u2804780392" && borderStyle,
 							color: selectedSection === "/playlists/34u2804780392" && "#fbfbff",
 						}}
-						onClick={() => setSelectedSection("playlists/34u2804780392")}
+						onClick={() => setSelectedSection("/playlists/34u2804780392")}
 					>
 						Playlist name
 					</Link>

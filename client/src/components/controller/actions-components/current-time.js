@@ -13,8 +13,8 @@ const Duration = () => {
 	};
 
 	useEffect(() => parseSongCurrentTime(state.currentTime), [state.currentTime]);
-	if (!state.currentTime) return null;
-
+	if (!state.audio) return null;
+	if (!state.currentTime) return <p>{`0:00`}</p>;
 	return (
 		<>
 			<p>{`${currentTime.minutes}:${currentTime.seconds}`}</p>

@@ -41,11 +41,11 @@
 			cursor: default;
 			height: 4em;
 			width: 4em;
+			z-index: 0;
 		}
 
 		.actionBtns {
 			@include mixings.transition(all, 150ms);
-
 			&:hover {
 				@include mixings.transition(all, 150ms);
 				filter: invert(24%) sepia(42%) saturate(0%) hue-rotate(157deg) brightness(110%)

@@ -3,21 +3,24 @@ import { useCurrentSongContext } from "../../current-song/context";
 import songStyles from "../../styles/layout/song.module.scss";
 import Play from "./action-components/play";
 import Like from "./action-components/like";
-import AddToPlayList from "./action-components/add-to-playlist";
 import Duration from "./action-components/duration";
+import AddToPlayList from "./action-components/add-to-playlist";
 
 const SongContext = createContext("");
 const useSongContext = () => useContext(SongContext);
 
-const Song = ({ songName, artist, audio, image, index }) => {
+const Song = ({ id, songName, artist, duration, audio, image, index, playlist, isLiked }) => {
 	const { dispatch, actions } = useCurrentSongContext();
 	const [songInfo, setSongInfo] = useState({
+		id,
 		songName,
 		artist,
 		audio,
 		image,
 		index,
-		duration: "",
+		duration,
+		playlist,
+		isLiked,
 	});
 	if (index === 0)
 		return (
@@ -26,7 +29,7 @@ const Song = ({ songName, artist, audio, image, index }) => {
 					className={songStyles.songContainer}
 					onDoubleClick={() => dispatch({ type: actions.CHANGE_SONG, payload: songInfo })}
 				>
-					<Play audio={audio} />
+					<Play />
 					<img src={image} alt="song" className={songStyles.songImg} />
 					<div className={songStyles.songInfoContainer} style={{ width: "25%" }}>
 						<h4 className={songStyles.songInfo}>Name</h4>
@@ -40,7 +43,7 @@ const Song = ({ songName, artist, audio, image, index }) => {
 					</div>
 					<div className={songStyles.songInfoContainer}>
 						<h4 className={songStyles.songInfo}>Duration</h4>
-						<Duration audio={audio} />
+						<Duration />
 					</div>
 					<div className={songStyles.songInfoContainer}>
 						<h4 className={songStyles.songInfo}>Like</h4>
@@ -60,11 +63,11 @@ const Song = ({ songName, artist, audio, image, index }) => {
 				className={songStyles.songContainer}
 				onDoubleClick={() => dispatch({ type: actions.CHANGE_SONG, payload: songInfo })}
 			>
-				<Play audio={audio} />
+				<Play />
 				<img src={image} alt="song" className={songStyles.songImg} />
 				<p className={songStyles.songName}>{songName}</p>
 				<p>{artist}</p>
-				<Duration audio={audio} />
+				<Duration />
 				<Like />
 				<AddToPlayList />
 			</div>

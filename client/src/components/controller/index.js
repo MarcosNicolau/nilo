@@ -8,7 +8,7 @@ import { useRef } from "react";
 
 const Controller = () => {
 	const { state, dispatch, actions } = useCurrentSongContext();
-	const { songName, artist, duration, image, audio } = state;
+	const { songName, artist, duration, image, audio, index } = state;
 	const song = useRef();
 	return (
 		<div className={controllerStyles.controllerContainer} id={"controller"}>
@@ -31,9 +31,18 @@ const Controller = () => {
 					{duration && <p>{`${duration.minutes}:${duration.seconds}`}</p>}
 				</div>
 				<div className={`row ${controllerStyles.controls}`}>
-					<img src={nextBackBtn} alt="previous" className={controllerStyles.backBtn} />
+					<img
+						src={nextBackBtn}
+						alt="previous"
+						className={controllerStyles.backBtn}
+						onClick={() => dispatch({ type: actions.NEXT_BACK_SONG, payload: index - 1 })}
+					/>
 					<Play song={song} />
-					<img src={nextBackBtn} alt="next" />
+					<img
+						src={nextBackBtn}
+						alt="next"
+						onClick={() => dispatch({ type: actions.NEXT_BACK_SONG, payload: index + 1 })}
+					/>
 				</div>
 			</div>
 			<audio
@@ -43,6 +52,10 @@ const Controller = () => {
 				onTimeUpdate={(e) =>
 					dispatch({ type: actions.SET_CURRENT_TIME, payload: e.target.currentTime })
 				}
+				onEnded={() => {
+					if (state.isShufflePlay) return dispatch({ type: actions.SHUFFLE_PLAY });
+					dispatch({ type: actions.NEXT_BACK_SONG, payload: index + 1 });
+				}}
 			></audio>
 		</div>
 	);

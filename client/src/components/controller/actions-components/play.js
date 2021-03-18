@@ -1,13 +1,14 @@
 import playBtn from "../../../assets/controls/play.svg";
 import pauseBtn from "../../../assets/controls/pause.svg";
 import controllerStyles from "../../../styles/layout/controller.module.scss";
-import { useState } from "react";
+import { useCurrentSongContext } from "../../../current-song/context";
 
 const Play = ({ song }) => {
-	const [pause, setPause] = useState(false);
+	const { state, dispatch, actions } = useCurrentSongContext();
+
 	return (
 		<>
-			{pause ? (
+			{state.paused ? (
 				<img
 					src={playBtn}
 					alt="play pause"
@@ -15,7 +16,7 @@ const Play = ({ song }) => {
 					onClick={() => {
 						if (!song.current.currentSrc) return;
 						song.current.play();
-						setPause((prev) => !prev);
+						dispatch({ type: actions.PLAY_PAUSE_SONG });
 					}}
 				/>
 			) : (
@@ -26,7 +27,7 @@ const Play = ({ song }) => {
 					onClick={() => {
 						if (!song.current.currentSrc) return;
 						song.current.pause();
-						setPause((prev) => !prev);
+						dispatch({ type: actions.PLAY_PAUSE_SONG });
 					}}
 				/>
 			)}

@@ -37,16 +37,22 @@ const NewSong = () => {
 					onSubmit={async (values, { setErrors }) => {
 						if (!audioFile) return setErrors({ global: "Complete all the fields" });
 						if (!imageFile) return setErrors({ global: "Complete all the fields" });
-
 						const formData = new FormData();
-						formData.append("audio", audioFile);
+						formData.append("audio", audioFile.file);
+						formData.append("duration", JSON.stringify(audioFile.duration));
 						formData.append("image", imageFile);
 						formData.append("name", values.name);
 						formData.append("genre", values.genre);
 
 						setIsLoading(true);
-						await axios.post("/create/new-song", formData);
-						window.location.href = "/my-songs";
+						try {
+							await axios.post("/create/new-song", formData);
+							window.location.href = "/my-songs";
+						} catch (err) {
+							const res = err.response;
+							if (res.status === 400) return setErrors({ global: res.data });
+							if (res.status === 500) return setErrors({ global: res.data });
+						}
 					}}
 					validate={(values) => {
 						const errors = {};
@@ -55,14 +61,23 @@ const NewSong = () => {
 						return errors;
 					}}
 				>
-					{({ values, errors, touched, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
+					{({
+						values,
+						errors,
+						touched,
+						handleChange,
+						handleBlur,
+						handleSubmit,
+						isSubmitting,
+						setErrors,
+					}) => (
 						<form
 							onSubmit={handleSubmit}
 							className={newFormStyles.form}
 							encType="multipart-form-data"
 						>
 							<img src={closeIcon} alt="close" className="close" />
-							<ImgInput value={values.image} setter={setImageFile} image={imageFile} />
+							<ImgInput value={values.image} setter={setImageFile} setErrors={setErrors} />
 							<div className={newFormStyles.songInputContainer}>
 								<label htmlFor="song-name" className={formStyles.label}>
 									Song name
@@ -78,7 +93,7 @@ const NewSong = () => {
 								{errors.name && touched.name && <FormError error={errors.name} />}
 
 								<SongGenreSelector value={values.songGenre} handleChange={handleChange} />
-								<AudioInput value={audioFile} setter={setAudioFile} />
+								<AudioInput value={audioFile} setter={setAudioFile} setErrors={setErrors} />
 								{errors.global && <FormError error={errors.global} style={{ margin: "2em 0 0" }} />}
 							</div>
 							<button
