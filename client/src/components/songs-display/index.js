@@ -27,8 +27,8 @@ const SongsDisplay = ({ playlist, sectionName }) => {
 				{playlist.map((song, index) => (
 					<Song
 						playlist={playlist}
-						key={song.id}
-						id={song.id}
+						key={song._id}
+						id={song._id}
 						songName={song.songName}
 						artist={song.artist}
 						duration={song.duration}

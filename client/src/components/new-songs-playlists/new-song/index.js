@@ -31,7 +31,7 @@ const NewSong = () => {
 				<h2 className={formStyles.formTitle}>Upload your song</h2>
 				<Formik
 					initialValues={{
-						name: "",
+						songName: "",
 						genre: "pop",
 					}}
 					onSubmit={async (values, { setErrors }) => {
@@ -41,7 +41,7 @@ const NewSong = () => {
 						formData.append("audio", audioFile.file);
 						formData.append("duration", JSON.stringify(audioFile.duration));
 						formData.append("image", imageFile);
-						formData.append("name", values.name);
+						formData.append("songName", values.songName);
 						formData.append("genre", values.genre);
 
 						setIsLoading(true);
@@ -56,7 +56,7 @@ const NewSong = () => {
 					}}
 					validate={(values) => {
 						const errors = {};
-						if (!values.name) errors.name = "Required";
+						if (!values.songName) errors.songName = "Required";
 						if (!values.genre) errors.genre = "Required";
 						return errors;
 					}}
@@ -84,13 +84,13 @@ const NewSong = () => {
 								</label>
 								<input
 									type="text"
-									name="name"
+									name="songName"
 									className="input"
 									value={values.name}
 									onBlur={handleBlur}
 									onChange={handleChange}
 								/>
-								{errors.name && touched.name && <FormError error={errors.name} />}
+								{errors.songName && touched.nasongNameme && <FormError error={errors.songName} />}
 
 								<SongGenreSelector value={values.songGenre} handleChange={handleChange} />
 								<AudioInput value={audioFile} setter={setAudioFile} setErrors={setErrors} />

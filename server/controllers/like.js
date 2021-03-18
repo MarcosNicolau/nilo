@@ -1,17 +1,16 @@
-const db = require("../db");
+const User = require("../models/user");
 
 const setLike_post = async (req, res) => {
 	const { songId, isLiked } = req.body;
+	const user = await User.findById(req.user.id);
 	if (!isLiked) {
-		await db.query(
-			`UPDATE likes SET liked_songs=JSON_ARRAY_APPEND(liked_songs, '$', '${songId}') WHERE '${req.user.id}' = id`
-		);
+		user.likes.push(songId);
+		await user.save();
 		res.send(true);
 	}
 	if (isLiked) {
-		await db.query(
-			`UPDATE likes SET liked_songs=JSON_REMOVE(liked_songs, JSON_UNQUOTE(JSON_SEARCH(liked_songs, 'one', '${songId}'))) WHERE '${req.user.id}' = id`
-		);
+		const removeLike = user.likes.filter((like) => like !== songId);
+		await user.updateOne({ likes: removeLike });
 		res.send(false);
 	}
 };

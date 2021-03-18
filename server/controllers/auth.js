@@ -1,4 +1,4 @@
-const db = require("../db");
+const User = require("../models/user");
 const { hash } = require("bcrypt");
 const passport = require("passport");
 
@@ -11,27 +11,22 @@ const isUserConnected_get = (req, res) => {
 
 const checkUsernameAvailability_post = async (req, res) => {
 	const username = req.body.username;
-	const [isUsernameTaken] = await db.query(
-		`SELECT * FROM users WHERE username = '${username.toLowerCase()}'`
-	);
-	if (isUsernameTaken.length) return res.send("Username already taken");
+	const isUsernameTaken = await User.findOne({ username });
+	if (isUsernameTaken) return res.send("Username already taken");
 	res.send("");
 };
 
 const signIn_post = async (req, res) => {
 	const { username, password } = req.body;
-	const [isUsernameTaken] = await db.query(
-		`SELECT * FROM users WHERE username = '${username.toLowerCase()}'`
-	);
-	if (isUsernameTaken.length) return res.status(400).send("Username already taken");
+	const isUsernameTaken = await User.findOne({ username });
+	if (isUsernameTaken) return res.status(400).send("Username already taken");
 
 	const hashedPassword = await hash(password, 12);
-	await db.query(
-		`INSERT INTO 
-			users(username, password) 
-			value('${username.toLowerCase()}', '${hashedPassword}')
-		`
-	);
+	const newUser = new User({
+		username,
+		password: hashedPassword,
+	});
+	await newUser.save();
 	res.send("/");
 };
 

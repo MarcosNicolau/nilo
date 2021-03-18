@@ -10,7 +10,7 @@ import Controller from "./components/controller";
 import Login from "./components/auth/login";
 import SignIn from "./components/auth/sign-in";
 import NewSong from "./components/new-songs-playlists/new-song";
-import NewPlaylist from "./components/new-songs-playlists/new-playlist/new-playlist";
+import NewPlaylist from "./components/new-songs-playlists/new-playlist/";
 import NewSongPlaylistCtxProvider from "./components/new-songs-playlists/context";
 
 //Sections import

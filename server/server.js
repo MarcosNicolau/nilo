@@ -1,4 +1,5 @@
 const express = require("express");
+const mongoose = require("mongoose");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const session = require("express-session");
@@ -8,13 +9,18 @@ const createRoutes = require("./routes/create");
 const songsRoutes = require("./routes/songs");
 const likeRoutes = require("./routes/like");
 const passport = require("passport");
-require("./db");
 require("dotenv").config();
 
-const PORT = process.env.PORT || 8080;
 const app = express();
+const PORT = process.env.PORT || 8080;
+const db = process.env.DB;
 
-app.use(bodyParser.json({ limit: "50mb" }));
+mongoose
+	.connect(db, { useUnifiedTopology: true, useNewUrlParser: true })
+	.then(() => app.listen(PORT), console.log(`server listening on ${PORT}`))
+	.catch((err) => console.log(err));
+
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 app.use(
@@ -27,8 +33,6 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 passportLocalStrategy(passport);
-
-app.listen(PORT, () => console.log(`listening on port ${PORT}`));
 
 //ROUTES
 app.use("/auth", authRoutes);

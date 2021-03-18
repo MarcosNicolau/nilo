@@ -1,16 +1,16 @@
 const LocalStrategy = require("passport-local").Strategy;
 const { compare } = require("bcrypt");
-const db = require("../db");
+const User = require("../models/user");
 
 const passportLocalStrategy = (passport) => {
 	passport.use(
 		new LocalStrategy(async (username, password, done) => {
-			const [user] = await db.query(`SELECT * FROM users WHERE username = '${username}'`);
-			if (!user.length) return done(null, false, { message: "Incorrect Fields." });
-			const isPasswordCorrect = await compare(password, user[0].password);
+			const user = await User.findOne({ username });
+			if (!user) return done(null, false, { message: "Incorrect Fields." });
+			const isPasswordCorrect = await compare(password, user.password);
 			if (!isPasswordCorrect) return done(null, false, { message: "Incorrect Fields." });
 
-			return done(null, user[0]);
+			return done(null, user);
 		})
 	);
 
@@ -19,8 +19,8 @@ const passportLocalStrategy = (passport) => {
 	});
 
 	passport.deserializeUser(async (id, done) => {
-		const [user] = await db.query(`SELECT * FROM users WHERE id = '${id}'`);
-		done(null, user[0]);
+		const user = await User.findById(id);
+		done(null, user);
 	});
 };
 
