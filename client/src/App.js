@@ -15,6 +15,7 @@ import NewSongPlaylistCtxProvider from "./components/new-songs-playlists/context
 
 //Sections import
 import MySongs from "./components/pages/my-songs";
+import LikedSongs from "./components/pages/liked-songs";
 
 //Song Imports
 import CurrentSongContextProvider from "./current-song/context";
@@ -57,6 +58,7 @@ const App = () => {
 					<Controller />
 					<Switch>
 						<Route path={"/my-songs"} component={MySongs} />
+						<Route path={"/liked-songs"} component={LikedSongs} />
 					</Switch>
 				</Router>
 			</CurrentSongContextProvider>

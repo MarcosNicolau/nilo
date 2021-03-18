@@ -18,6 +18,30 @@ const mySongs_get = async (req, res) => {
 	res.send(setParams);
 };
 
+const likedSongs_get = async (req, res) => {
+	const id = req.user.id;
+	const [[getLikes]] = await db.query(`SELECT * FROM likes WHERE id = '${id}'`);
+	const likes = getLikes.liked_songs;
+	const likedSongs = [];
+	for await (like of likes) {
+		const [[song]] = await db.query(
+			`SELECT songs.id, artist, songName, image, audio, genre, duration FROM songs WHERE id = '${like}'`
+		);
+		likedSongs.push(song);
+	}
+	const setParams = likedSongs
+		.map((song, index) => {
+			return {
+				...song,
+				index,
+				isLiked: true,
+			};
+		})
+		.reverse();
+	res.send(setParams);
+};
+
 module.exports = {
 	mySongs_get,
+	likedSongs_get,
 };
