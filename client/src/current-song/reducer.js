@@ -1,4 +1,7 @@
+import axios from "axios";
+
 const songState = {
+	_id: "",
 	songName: "",
 	artist: "",
 	duration: "",
@@ -9,6 +12,7 @@ const songState = {
 	index: "",
 	playlist: "",
 	isShufflePlay: false,
+	isLiked: false,
 };
 
 const SONG_ACTIONS = {
@@ -39,10 +43,12 @@ const songReducer = (state, action) => {
 	}
 };
 
-function changeSong(state, payload) {
-	const { songName, artist, duration, image, audio, index, playlist } = payload;
+function changeSong(state, payload, isShufflePlay) {
+	const { _id, songName, artist, duration, image, audio, index, playlist, isLiked } = payload;
+	setRecentlyPlayed(payload._id);
 	return {
 		...state,
+		_id,
 		songName,
 		artist,
 		duration,
@@ -50,42 +56,21 @@ function changeSong(state, payload) {
 		audio,
 		paused: false,
 		index,
-		playlist,
-		isShufflePlay: false,
+		playlist: playlist || state.playlist,
+		isShufflePlay,
+		isLiked,
 	};
 }
 
 function nextBackSong(state, payload) {
 	if (!state.playlist[payload]) return { ...state };
-	const { songName, artist, duration, image, audio, index } = state.playlist[payload];
-	return {
-		...state,
-		songName,
-		artist,
-		duration,
-		image,
-		audio,
-		paused: false,
-		index,
-	};
+	return changeSong(state, state.playlist[payload]);
 }
 
 function shufflePlay(state, payload) {
-	const playlist = state.playlist || payload;
-	const randomNumber = getRandomNumber(playlist.length - 1, state.index);
-	const { songName, artist, duration, image, audio, index } = playlist[randomNumber];
-	return {
-		...state,
-		songName,
-		artist,
-		duration,
-		image,
-		audio,
-		paused: false,
-		index,
-		playlist,
-		isShufflePlay: true,
-	};
+	const playlist = payload || state.playlist;
+	const randomNumber = playlist.length > 1 ? getRandomNumber(playlist.length - 1, state.index) : 0;
+	return changeSong(state, playlist[randomNumber], true);
 }
 
 function getRandomNumber(max, index) {
@@ -94,6 +79,10 @@ function getRandomNumber(max, index) {
 		randomNumber = Math.round(Math.random() * (max - 0) + 0);
 	}
 	return randomNumber;
+}
+
+function setRecentlyPlayed(songId) {
+	axios.post("/songs/set-recently-played", { songId });
 }
 
 export default songReducer;

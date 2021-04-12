@@ -3,6 +3,7 @@ const formidable = require("formidable");
 const fs = require("fs");
 const Song = require("../models/song");
 const User = require("../models/user");
+const Playlist = require("../models/playlist");
 
 const newSong_post = async (req, res, next) => {
 	const form = new formidable.IncomingForm();
@@ -33,7 +34,7 @@ const newSong_post = async (req, res, next) => {
 		});
 		await newSong.save();
 		const user = await User.findById(req.user.id);
-		user.songs.push(newSong.id);
+		user.songs.push(newSong._id);
 		user.save();
 		res.send();
 	});
@@ -55,17 +56,21 @@ const newPlaylist_post = async (req, res) => {
 		const directory = () => `playlist/${req.user.id}/${name}-${id}/${name}`;
 		const imgUrl = await saveFileInS3(imageFile, directory(), image.type);
 		//Save in the DB
-		// await db.query(`INSERT INTO playlist(user_id, songName, genre, image, audio, artist, duration)
-		// values(
-		// 	'${req.user.id}',
-		// 	'${name}',
-		// 	'${genre}',
-		// 	'${imgUrl}',
-		// 	'${audioUrl}',
-		// 	'${req.user.username}',
-		// 	'${duration}'
-		// )`);
-		res.send();
+		const newPlaylist = new Playlist({
+			playlistName: name,
+			playlistDescription: description,
+			image: imgUrl,
+		});
+		await newPlaylist.save();
+		const user = await User.findById(req.user.id);
+		user.playlists.push(newPlaylist._id.toString());
+		await user.save();
+		const playlists = [];
+		for await (playlistId of user.playlists) {
+			const playlist = await Playlist.findById(playlistId);
+			playlists.push(playlist);
+		}
+		res.send(playlists);
 	});
 };
 

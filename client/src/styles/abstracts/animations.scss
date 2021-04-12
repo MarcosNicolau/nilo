@@ -1,0 +1,17 @@
+@keyframes appear {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 0.999999;
+	}
+}
+
+@keyframes disappear {
+	from {
+		opacity: 0.999999;
+	}
+	to {
+		opacity: 0;
+	}
+}

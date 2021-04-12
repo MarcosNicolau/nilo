@@ -24,13 +24,24 @@
 			background-color: variables.$secondary-color;
 		}
 
-		h4 {
-			font-size: 1.2rem;
-			margin: 0 0 0.5em;
+		.nameArtistContainer {
+			margin-right: 1em;
+			h4 {
+				font-size: 1.2rem;
+				margin: 0 0 0.5em;
+			}
+
+			p {
+				margin: 0;
+			}
 		}
 
-		p {
-			margin: 0;
+		.actionBtns {
+			@include mixings.flex-center(column);
+			img {
+				height: 2em;
+				cursor: pointer;
+			}
 		}
 	}
 

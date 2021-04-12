@@ -4,17 +4,22 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const session = require("express-session");
 const passportLocalStrategy = require("./config/passport");
+const passport = require("passport");
+require("dotenv").config();
+
+//Import routes
 const authRoutes = require("./routes/auth");
 const createRoutes = require("./routes/create");
 const songsRoutes = require("./routes/songs");
 const likeRoutes = require("./routes/like");
-const passport = require("passport");
-require("dotenv").config();
+const playlistRoutes = require("./routes/playlist");
+const galleriesRoutes = require("./routes/galleries");
 
 const app = express();
 const PORT = process.env.PORT || 8080;
 const db = process.env.DB;
 
+//Connect DB
 mongoose
 	.connect(db, { useUnifiedTopology: true, useNewUrlParser: true })
 	.then(() => app.listen(PORT), console.log(`server listening on ${PORT}`))
@@ -39,3 +44,5 @@ app.use("/auth", authRoutes);
 app.use("/create", createRoutes);
 app.use("/songs", songsRoutes);
 app.use("/like", likeRoutes);
+app.use("/playlist", playlistRoutes);
+app.use("/galleries", galleriesRoutes);

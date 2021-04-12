@@ -1,11 +1,13 @@
 @use '../abstracts/mixings';
 @use '../abstracts/variables';
+@use '../abstracts/animations.scss';
 
 .container {
 	position: absolute;
 	height: 88vh;
 	z-index: 100;
 	background-color: rgba(0, 0, 0, 0.6);
+	animation: appear 250ms ease-in-out;
 
 	.form {
 		@include mixings.flex-center(row);
@@ -69,14 +71,6 @@
 	}
 }
 
-.appear {
-	opacity: 0.999999;
-	pointer-events: all;
-	@include mixings.transition(all, 250ms);
-}
-
 .disappear {
-	opacity: 0;
-	pointer-events: none;
-	@include mixings.transition(all, 250ms);
+	animation: disappear 250ms ease-in-out forwards;
 }

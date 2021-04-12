@@ -1,0 +1,119 @@
+@use '../abstracts/variables';
+@use '../abstracts/mixings';
+
+.galleriesContainer {
+	margin: 2em 5em;
+}
+
+.galleryContainer {
+	@include mixings.flex-center(column);
+	margin-bottom: 5em;
+	color: variables.$font-color;
+	padding: 1em 2em;
+	width: 90%;
+	.infoContainer {
+		@include mixings.flex-center(row);
+		position: relative;
+		width: 100%;
+		justify-content: unset;
+		padding-bottom: 0.5em;
+		margin-bottom: 1em;
+		border-bottom: solid 0.0625em variables.$quinary-color;
+		h1 {
+			font-size: 1.8rem;
+			margin: 0 0em 0em 1em;
+			font-weight: 300;
+		}
+
+		.arrows {
+			position: absolute;
+			right: 2em;
+			img {
+				cursor: pointer;
+				margin: 0 0.2em;
+				height: 1.5em;
+			}
+		}
+	}
+
+	.contentContainer {
+		@include mixings.flex-center(row);
+		justify-content: unset;
+		overflow-x: hidden;
+		scroll-behavior: smooth;
+		width: 100%;
+
+		.content {
+			width: 13em;
+			margin: 0em;
+			@include mixings.flex-center(column);
+			@include mixings.transition(opacity, 150ms);
+
+			&:hover {
+				opacity: 0.8;
+				@include mixings.transition(opacity, 150ms);
+			}
+
+			.contentImgContainer {
+				cursor: pointer;
+				position: relative;
+				@include mixings.flex-center(row);
+
+				img {
+					height: 10em;
+					width: 10em;
+				}
+				p {
+					position: absolute;
+					text-transform: uppercase;
+					color: variables.$primary-color;
+					text-align: center;
+				}
+			}
+
+			.name {
+				margin: 0.5em 0;
+				font-weight: 500;
+				font-size: 1.1rem;
+				max-width: 75%;
+				text-align: center;
+				cursor: pointer;
+				@include mixings.transition(all, 150ms);
+
+				&:hover {
+					text-decoration: underline;
+					color: rgb(116, 116, 116);
+					@include mixings.transition(all, 150ms);
+				}
+			}
+		}
+	}
+}
+
+.dark {
+	color: variables.$primary-color;
+	background-color: variables.$tertiary-color;
+	border-radius: 0.9rem;
+	.arrows {
+		img {
+			filter: invert(98%) sepia(82%) saturate(482%) hue-rotate(180deg) brightness(102%)
+				contrast(102%);
+		}
+	}
+}
+.playImg {
+	opacity: 0;
+	position: absolute;
+	height: 10em;
+	width: 10em;
+	@include mixings.flex-center(row);
+	@include mixings.transition(opacity, 150ms);
+	background-color: rgba(0, 0, 0, 0.6);
+}
+
+.content:hover {
+	.playImg {
+		opacity: 1;
+		@include mixings.transition(opacity, 150ms);
+	}
+}

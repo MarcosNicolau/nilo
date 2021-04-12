@@ -2,7 +2,6 @@ import "./styles/index.scss";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import UserContext from "./user-context";
 
 //Navigation and authentication import
 import Nav from "./components/nav/nav";
@@ -11,14 +10,20 @@ import Login from "./components/auth/login";
 import SignIn from "./components/auth/sign-in";
 import NewSong from "./components/new-songs-playlists/new-song";
 import NewPlaylist from "./components/new-songs-playlists/new-playlist/";
+
+//Contexts
+import CurrentSongContextProvider from "./current-song/context";
 import NewSongPlaylistCtxProvider from "./components/new-songs-playlists/context";
+import UserContext from "./user-context";
+import PlaylistsContextProvider from "./components/playlist/context";
 
 //Sections import
+import Home from "./components/home";
 import MySongs from "./components/pages/my-songs";
 import LikedSongs from "./components/pages/liked-songs";
+import Playlist from "./components/pages/playlist";
 
 //Song Imports
-import CurrentSongContextProvider from "./current-song/context";
 
 const App = () => {
 	const [user, setUser] = useState("Loading");
@@ -49,18 +54,22 @@ const App = () => {
 	return (
 		<UserContext.Provider value={user}>
 			<CurrentSongContextProvider>
-				<Router>
-					<NewSongPlaylistCtxProvider>
-						<Nav />
-						<NewSong />
-						<NewPlaylist />
-					</NewSongPlaylistCtxProvider>
-					<Controller />
-					<Switch>
-						<Route path={"/my-songs"} component={MySongs} />
-						<Route path={"/liked-songs"} component={LikedSongs} />
-					</Switch>
-				</Router>
+				<PlaylistsContextProvider>
+					<Router>
+						<NewSongPlaylistCtxProvider>
+							<Nav />
+							<NewSong />
+							<NewPlaylist />
+						</NewSongPlaylistCtxProvider>
+						<Controller />
+						<Switch>
+							<Route exact path="/" component={Home} />
+							<Route path="/my-songs" component={MySongs} />
+							<Route path="/liked-songs" component={LikedSongs} />
+							<Route path="/playlist/:id" component={Playlist} />
+						</Switch>
+					</Router>
+				</PlaylistsContextProvider>
 			</CurrentSongContextProvider>
 		</UserContext.Provider>
 	);

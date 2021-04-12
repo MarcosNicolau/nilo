@@ -4,7 +4,7 @@ import SectionBar from "../utils/section-bar";
 import ShufflePlay from "../utils/shuffle-play";
 import Main from "../utils/main-content";
 
-const SongsDisplay = ({ playlist, sectionName }) => {
+const SongsDisplay = ({ playlist, sectionName, isInPlaylist, setPlaylist }) => {
 	if (playlist === "loading")
 		return (
 			<Main>
@@ -24,18 +24,13 @@ const SongsDisplay = ({ playlist, sectionName }) => {
 			</SectionBar>
 
 			<div className={`${songStyles.songsContainer}`}>
-				{playlist.map((song, index) => (
+				{playlist.map((song) => (
 					<Song
+						song={song}
 						playlist={playlist}
 						key={song._id}
-						id={song._id}
-						songName={song.songName}
-						artist={song.artist}
-						duration={song.duration}
-						audio={song.audio}
-						image={song.image}
-						index={index}
-						isLiked={song.isLiked}
+						isInPlaylist={isInPlaylist}
+						setPlaylist={setPlaylist}
 					/>
 				))}
 			</div>

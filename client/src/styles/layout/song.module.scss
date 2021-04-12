@@ -1,5 +1,6 @@
 @use '../abstracts/variables.scss';
 @use '../abstracts/mixings.scss';
+@use '../abstracts/animations.scss';
 
 .songsContainer {
 	@include mixings.flex-center(column);
@@ -44,15 +45,6 @@
 			z-index: 0;
 		}
 
-		.actionBtns {
-			@include mixings.transition(all, 150ms);
-			&:hover {
-				@include mixings.transition(all, 150ms);
-				filter: invert(24%) sepia(42%) saturate(0%) hue-rotate(157deg) brightness(110%)
-					contrast(79%);
-			}
-		}
-
 		p {
 			font-size: 1.08rem;
 			color: variables.$font-color;
@@ -75,6 +67,16 @@
 		@include mixings.transition(all, 150ms);
 		filter: invert(24%) sepia(42%) saturate(0%) hue-rotate(157deg) brightness(110%) contrast(79%);
 	}
+}
+
+.addToPlaylistContainer {
+	@include mixings.flex-center(row);
+	@include mixings.absolute-center;
+	height: 100%;
+	width: 100%;
+	z-index: 10;
+	background-color: rgba(0, 0, 0, 0.6);
+	opacity: 0.99999;
 }
 
 //Media query for play btn

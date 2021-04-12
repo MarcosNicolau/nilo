@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useNewSongCtx } from "../context";
 import { Formik } from "formik";
 import closeIcon from "../../../assets/close.svg";
@@ -15,17 +15,20 @@ const NewSong = () => {
 	const [isLoading, setIsLoading] = useState(false);
 	const [audioFile, setAudioFile] = useState(undefined);
 	const [imageFile, setImageFile] = useState(undefined);
+	const form = useRef();
 	const closeNewSong = (e) => {
-		if (e.target.classList.contains("background") || e.target.classList.contains("close"))
-			return setNewSong((prev) => !prev);
+		if (e.target.classList.contains("background") || e.target.classList.contains("close")) {
+			form.current.classList.add(newFormStyles.disappear);
+			//Wait till animation finishes
+			window.setTimeout(() => setNewSong((prev) => !prev), 250);
+		}
 	};
-
+	if (!newSong) return null;
 	return (
 		<div
-			className={`background ${newFormStyles.container} ${
-				newSong ? newFormStyles.appear : newFormStyles.disappear
-			}`}
+			className={`background ${newFormStyles.container} ${newFormStyles.appear}`}
 			onClick={closeNewSong}
+			ref={form}
 		>
 			<div className={formStyles.formContainer}>
 				<h2 className={formStyles.formTitle}>Upload your song</h2>

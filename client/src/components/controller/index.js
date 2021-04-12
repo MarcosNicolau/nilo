@@ -3,6 +3,7 @@ import nextBackBtn from "../../assets/controls/next-back.svg";
 import Play from "./actions-components/play";
 import CurrentTime from "./actions-components/current-time";
 import Range from "./actions-components/range";
+import Like from "../song/action-components/like";
 import { useCurrentSongContext } from "../../current-song/context";
 import { useRef } from "react";
 
@@ -18,7 +19,7 @@ const Controller = () => {
 				) : (
 					<div className={controllerStyles.songCover}></div>
 				)}
-				<div>
+				<div className={controllerStyles.nameArtistContainer}>
 					<h4>{songName}</h4>
 					<p>{artist}</p>
 				</div>
@@ -44,6 +45,9 @@ const Controller = () => {
 						onClick={() => dispatch({ type: actions.NEXT_BACK_SONG, payload: index + 1 })}
 					/>
 				</div>
+			</div>
+			<div className={controllerStyles.actionBtns}>
+				<Like songInfo={state} isLight="true" />
 			</div>
 			<audio
 				ref={song}

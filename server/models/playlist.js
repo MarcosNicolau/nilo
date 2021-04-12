@@ -6,14 +6,13 @@ const playlistSchema = new Schema({
 		required: true,
 		type: String,
 	},
-	playlistImg: {
+	playlistDescription: String,
+	image: {
 		required: true,
 		type: String,
 	},
-	songs: {
-		required: true,
-		type: Array,
-	},
+	songs: Array,
+	likes: Number,
 });
 
 const Playlist = mongoose.model("Playlist", playlistSchema);

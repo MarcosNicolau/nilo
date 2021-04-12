@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useNewPlaylistCtx } from "../context";
 import { Formik } from "formik";
 import formStyles from "../../../styles/layout/form.module.scss";
@@ -6,22 +6,25 @@ import newFormStyles from "../../../styles/layout/new-form.module.scss";
 import ImgInput from "../img-input";
 import FormError from "../../utils/form-error";
 import axios from "axios";
+import closeIcon from "../../../assets/close.svg";
+import { usePlaylistsContext } from "../../playlist/context";
 
 const NewPlaylist = () => {
 	const { newPlaylist, setNewPlaylist } = useNewPlaylistCtx();
+	const { setPlaylists } = usePlaylistsContext();
 	const [isLoading, setIsLoading] = useState(false);
 	const [imageFile, setImageFile] = useState(undefined);
-	const closeNewSong = (e) => {
-		if (e.target.classList.contains("background") || e.target.classList.contains("close"))
-			return setNewPlaylist((prev) => !prev);
+	const form = useRef();
+	const closeNewPlaylist = (e) => {
+		if (e.target.classList.contains("background") || e.target.classList.contains("close")) {
+			form.current.classList.add(newFormStyles.disappear);
+			//Wait till animation finishes
+			window.setTimeout(() => setNewPlaylist((prev) => !prev), 250);
+		}
 	};
+	if (!newPlaylist) return null;
 	return (
-		<div
-			className={`background ${newFormStyles.container} ${
-				newPlaylist ? newFormStyles.appear : newFormStyles.disappear
-			}`}
-			onClick={closeNewSong}
-		>
+		<div className={`background ${newFormStyles.container}`} onClick={closeNewPlaylist} ref={form}>
 			<div className={formStyles.formContainer}>
 				<h2 className={formStyles.formTitle}>Create a new playlist</h2>
 				<Formik
@@ -41,12 +44,13 @@ const NewPlaylist = () => {
 						const formData = new FormData();
 						formData.append("image", imageFile);
 						formData.append("name", values.name);
-						formData.append("genre", values.genre);
+						formData.append("description", values.description);
 
 						setIsLoading(true);
 						try {
-							await axios.post("/create/new-playlist", formData);
-							window.location.href = "/";
+							const res = await axios.post("/create/new-playlist", formData);
+							setNewPlaylist((prev) => !prev);
+							setPlaylists(res.data);
 						} catch (err) {
 							const res = err.response;
 							if (res.status === 400) return setErrors({ global: res.data });
@@ -56,6 +60,7 @@ const NewPlaylist = () => {
 				>
 					{({ values, errors, touched, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
 						<form onSubmit={handleSubmit} className={newFormStyles.form}>
+							<img src={closeIcon} alt="close" className="close" />
 							<ImgInput
 								value={values.image}
 								handleChange={handleChange}

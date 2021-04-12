@@ -9,6 +9,7 @@ nav {
 	height: 85%;
 	background-color: variables.$secondary-color;
 	color: variables.$primary-color;
+
 	img {
 		height: 2rem;
 	}
@@ -55,9 +56,11 @@ nav {
        PLAYLISTS
     ==============*/
 	.playlistContainer {
-		overflow: auto;
+		overflow-y: auto;
+		overflow-x: hidden;
 		margin-bottom: 2em;
 		@include mixings.flex-center(column);
+		width: 180px;
 	}
 
 	.playlistsBtn {
@@ -74,9 +77,15 @@ nav {
 		padding: 0 2em;
 		@include mixings.flex-center(column);
 		justify-content: unset;
+		align-items: unset;
 		opacity: 0;
 		pointer-events: none;
 		@include mixings.transition(all, 150ms);
+
+		p {
+			color: variables.$primary-color;
+		}
+
 		a {
 			margin-bottom: 0.8em;
 			padding: 0 0.8em;
@@ -113,4 +122,9 @@ nav {
 			}
 		}
 	}
+}
+
+.activeLink {
+	border-left: solid 0.2rem #ffe156;
+	color: #fbfbff;
 }

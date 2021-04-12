@@ -1,0 +1,8 @@
+@use '../abstracts/mixings';
+.img-hover {
+	@include mixings.transition(all, 150ms);
+	&:hover {
+		@include mixings.transition(all, 150ms);
+		filter: invert(24%) sepia(42%) saturate(0%) hue-rotate(157deg) brightness(110%) contrast(79%);
+	}
+}

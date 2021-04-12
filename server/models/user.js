@@ -13,6 +13,7 @@ const userSchema = new Schema({
 	songs: Array,
 	likes: Array,
 	playlists: Array,
+	recentlyPlayed: Array,
 });
 
 const User = mongoose.model("User", userSchema);
